@@ -22,5 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 //Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/store-news-from-api', [NewsController::class, 'storeNewsFromApi']);
+    Route::post('/store-news-from-api', [NewsController::class, 'storeNewsFromApi'])->name('storeNewsFromApi');
 //});
