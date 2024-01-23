@@ -15,21 +15,21 @@ class NewsController extends Controller
      */
     public function index()
     {
-        // از دیتابیس 10 تا آخرین خبر را بخوانید
+        // از دیتابیس 10 تا آخرین خبر را بخواند
         $newsdata = News::query()->orderBy('created_at', 'desc')->take(10)->get();
 
         return view('news', compact('newsdata'));
     }
 
 
-    public function storeNewsFromApi(Request $request)
+    public function storeNewsFromApi()
     {
         $newskey = env('NEWS_API_KEY');
         $response = Http::get('https://newsapi.org/v2/top-headlines?country=us&apiKey=' . $newskey);
 
         $apiData = $response->json();
 
-        // چک کنید که آرایه دارای کلید "articles" باشد
+        // آرایه دارای کلید "articles" باشد
         if (isset($apiData['articles']) && count($apiData['articles']) > 0) {
             $articles = $apiData['articles'];
 
@@ -51,9 +51,9 @@ class NewsController extends Controller
                     ]
                 );
             }
-            return response()->json(['message' => 'اطلاعات با موفقیت ذخیره شد.']);
+            return response()->json(['message' => 'data save successfully!']);
         } else {
-            return response()->json(['message' => 'داده‌های معتبر از API دریافت نشد.']);
+            return response()->json(['message' => 'api data can`t save...']);
         }
     }
 
